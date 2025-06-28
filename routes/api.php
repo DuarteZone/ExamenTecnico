@@ -1,6 +1,13 @@
 <?php
 
-if ($requestUri === '/api/ping' && $requestMethod === 'GET') {
-    header('Content-Type: application/json');
-    echo json_encode(['message' => 'pong']);
+use App\Controllers\AuthController;
+
+$auth = new AuthController();
+
+if ($requestUri === '/api/register' && $requestMethod === 'POST') {
+    $auth->register();
+}
+
+if ($requestUri === '/api/login' && $requestMethod === 'POST') {
+    $auth->login();
 }

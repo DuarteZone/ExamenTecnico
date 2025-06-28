@@ -11,5 +11,7 @@
             "email": "126441341+DuarteZone@users.noreply.github.com"
         }
     ],
-    "require": {}
+    "require": {
+        "firebase/php-jwt": "^6.11"
+    }
 }
