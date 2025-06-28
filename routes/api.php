@@ -25,6 +25,12 @@ if ($requestUri === '/api/tasks' && $requestMethod === 'POST') {
     $task->store();
 }
 
+if (preg_match('#^/api/tasks/(\d+)/audit$#', $requestUri, $matches) && $requestMethod === 'GET') {
+    $id = (int)$matches[1];
+    $task->audit($id);
+    return;
+}
+
 if (preg_match('#^/api/tasks/(\d+)$#', $requestUri, $matches)) {
     $id = (int)$matches[1];
 

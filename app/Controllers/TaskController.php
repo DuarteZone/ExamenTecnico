@@ -6,35 +6,42 @@ use App\Middlewares\AuthMiddleware;
 use App\Models\Task;
 use App\Repositories\TaskRepository;
 
+use App\Core\Database;
+
+use PDO;
+
 class TaskController
 {
+      private \PDO $db;
+    
     private TaskRepository $repo;
 
     public function __construct()
     {
         $this->repo = new TaskRepository();
+        $this->db = Database::connect();
     }
 
-public function index()
-{
-    header('Content-Type: application/json');
+    public function index()
+    {
+        header('Content-Type: application/json');
 
-    $user = \App\Middlewares\AuthMiddleware::check();
+        $user = \App\Middlewares\AuthMiddleware::check();
 
-    $filters = [
-        'status' => $_GET['status'] ?? null,
-        'due_date' => isset($_GET['due_date']) ? date('Y-m-d', strtotime($_GET['due_date'])) : null,
-        'sort' => $_GET['sort'] ?? 'desc',
-        'page' => $_GET['page'] ?? 1,
-        'limit' => $_GET['limit'] ?? 10
-    ];
+        $filters = [
+            'status' => $_GET['status'] ?? null,
+            'due_date' => isset($_GET['due_date']) ? date('Y-m-d', strtotime($_GET['due_date'])) : null,
+            'sort' => $_GET['sort'] ?? 'desc',
+            'page' => $_GET['page'] ?? 1,
+            'limit' => $_GET['limit'] ?? 10
+        ];
 
-    $tasks = $this->repo->getByUserWithFilters($user->sub, $filters);
-  
+        $tasks = $this->repo->getByUserWithFilters($user->sub, $filters);
 
-    echo json_encode($tasks);
-    exit;
-}
+
+        echo json_encode($tasks);
+        exit;
+    }
 
 
 
@@ -98,5 +105,27 @@ public function index()
         }
 
         echo json_encode($task);
+    }
+    public function audit($id)
+    {
+        header('Content-Type: application/json');
+
+        $user = \App\Middlewares\AuthMiddleware::check();
+
+        // Validar que la tarea sea del usuario
+        $stmt = $this->db->prepare("SELECT id FROM tasks WHERE id = :id AND user_id = :user_id");
+        $stmt->execute(['id' => $id, 'user_id' => $user->sub]);
+        $task = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        if (!$task) {
+            http_response_code(404);
+            echo json_encode(['error' => 'Tarea no encontrada']);
+            return;
+        }
+
+        $auditLog = new \App\Models\TaskAuditLog($this->db);
+        $logs = $auditLog->getByTaskId($id);
+
+        echo json_encode($logs);
     }
 }

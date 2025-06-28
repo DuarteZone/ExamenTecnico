@@ -56,7 +56,7 @@ class TaskRepository
         $stmt = $this->db->prepare($query);
 
         foreach ($params as $key => $val) {
-            $stmt->bindValue(":$key", $val, PDO::PARAM_STR); // <-- Forzar como string
+            $stmt->bindValue(":$key", $val, PDO::PARAM_STR); //
         }
 
         $stmt->bindValue(":limit", $limit, PDO::PARAM_INT);
@@ -80,16 +80,38 @@ class TaskRepository
 
     public function update(int $id, int $userId, array $data): bool
     {
-        $stmt = $this->db->prepare("UPDATE tasks SET title = ?, description = ?, status = ?, due_date = ? WHERE id = ? AND user_id = ?");
-        return $stmt->execute([
-            $data['title'],
-            $data['description'],
-            $data['status'],
-            $data['due_date'],
-            $id,
-            $userId
+        // Obtener el estado actual
+        $stmt = $this->db->prepare("SELECT status FROM tasks WHERE id = :id AND user_id = :user_id");
+        $stmt->execute(['id' => $id, 'user_id' => $userId]);
+        $current = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$current) return false;
+
+        $oldStatus = $current['status'];
+        $newStatus = $data['status'] ?? $oldStatus;
+
+        $query = "UPDATE tasks SET title = :title, description = :description, status = :status, due_date = :due_date, updated_at = NOW()
+              WHERE id = :id AND user_id = :user_id";
+
+        $stmt = $this->db->prepare($query);
+        $success = $stmt->execute([
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'status' => $newStatus,
+            'due_date' => $data['due_date'],
+            'id' => $id,
+            'user_id' => $userId
         ]);
+
+        // Si el estado cambió, registrar en la auditoría
+        if ($success && $oldStatus !== $newStatus) {
+            $audit = new \App\Models\TaskAuditLog($this->db);
+            $audit->create($id, $oldStatus, $newStatus);
+        }
+
+        return $success;
     }
+
 
     public function delete(int $id, int $userId): bool
     {
