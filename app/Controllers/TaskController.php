@@ -15,12 +15,32 @@ class TaskController
         $this->repo = new TaskRepository();
     }
 
-    public function index()
-    {
-        $user = AuthMiddleware::check();
-        $tasks = $this->repo->getByUser($user->sub);
-        echo json_encode($tasks);
-    }
+public function index()
+{
+    header('Content-Type: application/json');
+
+    $user = \App\Middlewares\AuthMiddleware::check();
+
+    $filters = [
+        'status' => $_GET['status'] ?? null,
+        'due_date' => isset($_GET['due_date']) ? date('Y-m-d', strtotime($_GET['due_date'])) : null,
+        'sort' => $_GET['sort'] ?? 'desc',
+        'page' => $_GET['page'] ?? 1,
+        'limit' => $_GET['limit'] ?? 10
+    ];
+
+    $tasks = $this->repo->getByUserWithFilters($user->sub, $filters);
+  
+
+    echo json_encode($tasks);
+    exit;
+}
+
+
+
+
+
+
 
     public function store()
     {
