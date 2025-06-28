@@ -16,7 +16,7 @@ class AuthMiddleware
         }
 
         $token = str_replace('Bearer ', '', $headers['Authorization']);
-        $authService = new AuthService();
+        $authService = new \App\Services\AuthService();
         $user = $authService->verifyToken($token);
 
         if (!$user) {

@@ -26,22 +26,31 @@ class AuthController
         echo json_encode(['token' => $token]);
     }
 
-    public function login()
-    {
-        $data = json_decode(file_get_contents("php://input"), true);
-        if (!$data['email'] || !$data['password']) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Credenciales requeridas']);
-            return;
-        }
+   public function login()
+{
+    $data = json_decode(file_get_contents("php://input"), true);
 
-        $token = $this->auth->login($data);
-        if (!$token) {
-            http_response_code(401);
-            echo json_encode(['error' => 'Credenciales inválidas']);
-            return;
-        }
-
-        echo json_encode(['token' => $token]);
+    if (!$data) {
+        http_response_code(400);
+        echo json_encode(['error' => 'No se pudo decodificar el JSON']);
+        return;
     }
+
+    if (empty($data['email']) || empty($data['password'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Credenciales requeridas']);
+        return;
+    }
+
+    $token = $this->auth->login($data);
+    if (!$token) {
+        http_response_code(401);
+        echo json_encode(['error' => 'Credenciales inválidas']);
+        return;
+    }
+
+    header('Content-Type: application/json'); // ← asegúrate de forzar el tipo de respuesta
+    echo json_encode(['token' => $token]);
+}
+
 }
