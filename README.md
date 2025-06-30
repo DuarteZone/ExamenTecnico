@@ -167,3 +167,30 @@ MIA hahaah
 
 
 
+## se impleta docker para facilitar el despliegue y pruebas en entornos aislados. Puedes encontrar el archivo `docker-compose.yml` en la raíz del proyecto.
+## si quieres ocupar docker-compose para ejecutar el proyecto, asegúrate de tener Docker y Docker Compose instalados.
+## Para iniciar el contenedor, ejecuta:
+
+```bash
+docker-compose up -d --build
+## Esto levantará un contenedor con PHP, MySQL y las dependencias necesarias.
+```bash
+
+## para correr las migraciones y seeders dentro del contenedor, debes de cambiar el .env para que apunte a la base de datos del contenedor cual lo dejaré comentando en env.example y es cambiar la estructura ya sea comentando uno u otro.
+
+docker-compose exec app bash
+## se entra en el contenedor y se puede ejecutar comandos como `php`, `composer`, etc.
+## se ejecutan las migraciones y seeders dentro del contenedor:
+
+```bash
+root@6d8712fa3fdf:/var/www/html# php database/reset.php
+
+## Ejecuta los tests se creo el script `tests/bootstrap.php` para cargar el entorno y las dependencias y se corre con el script de PHPUnit:
+```bash
+ root@6d8712fa3fdf:/var/www/html#  composer test
+## Esto ejecutará todos los tests en la carpeta `tests/` y mostrará los resultados.
+
+
+
+
+
