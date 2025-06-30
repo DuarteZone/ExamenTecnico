@@ -3,6 +3,13 @@
 
 namespace App\Models;
 
+/**
+ * TaskAuditLog modelo que representa el registro de auditoría de cambios en las tareas.
+ * Este modelo define las propiedades de un registro de auditoría y su estructura.
+ * @package App\Models
+ * @author Joc Duarte
+ */
+
 use PDO;
 
 class TaskAuditLog

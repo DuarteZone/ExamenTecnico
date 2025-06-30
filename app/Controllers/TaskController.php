@@ -1,6 +1,12 @@
 <?php
 
 namespace App\Controllers;
+/*
+ * TaskController donde se manejan las peticiones de tareas
+ * Este controlador maneja las operaciones CRUD de las tareas.
+ * @package App\Controllers
+ * @author Joc Duarte
+ */
 
 use App\Middlewares\AuthMiddleware;
 use App\Models\Task;
@@ -27,6 +33,8 @@ class TaskController
         header('Content-Type: application/json');
 
         $user = \App\Middlewares\AuthMiddleware::check();
+
+        // Validar que el usuario esté autenticado
 
         $filters = [
             'status' => $_GET['status'] ?? null,

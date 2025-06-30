@@ -2,6 +2,14 @@
 
 namespace App\Services;
 
+/**
+ * AuthService para manejar la autenticación de usuarios.
+ * Este servicio permite registrar nuevos usuarios, iniciar sesión y generar tokens JWT.
+ * También verifica la validez de los tokens JWT.
+ * @package App\Services
+ * @author Joc Duarte
+ */
+
 use App\Models\User;
 use App\Repositories\UserRepository;
 use Firebase\JWT\JWT;

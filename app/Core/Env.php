@@ -2,6 +2,13 @@
 
 namespace App\Core;
 
+/** 
+ * en el archivo .env se pueden definir variables de entorno
+ * que pueden ser utilizadas en la aplicación.
+ * @package App\Core
+ * @author Joc Duarte
+ */
+
 class Env
 {
     public static function load(string $path): void
