@@ -4,7 +4,7 @@ API RESTful para gestión colaborativa de tareas, construida en PHP 8+ sin frame
 
 ---
 
-## 📋 Contenido
+## Contenido
 
 - [Descripción](#descripción)
 - [Requisitos](#requisitos)
