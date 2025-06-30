@@ -2,6 +2,13 @@
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
+/* * Seeder para crear usuarios de prueba.
+ * Este script utiliza Faker para generar datos aleatorios y poblar la tabla de usuarios.
+ * Crea 5 usuarios con un email único, nombre y una contraseña hasheada.
+ * @package App\Core
+ * @author Joc Duarte
+ */
+
 use App\Core\Env;
 use App\Core\Database;
 use Faker\Factory;

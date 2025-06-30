@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * API Routes
+ * Este archivo define las rutas de la API del sistema TaskFlow.
+ * Utiliza el patrón de diseño MVC para organizar las rutas y controladores.
+ * @package App\Core
+ * @author Joc Duarte
+ */
+
 use App\Controllers\AuthController;
 use App\Controllers\TaskController;
 

@@ -3,6 +3,15 @@ use PHPUnit\Framework\TestCase;
 use App\Repositories\TaskRepository;
 use App\Models\Task;
 
+
+/**
+ * TaskRepositoryTest
+ * Clase de prueba para verificar el funcionamiento del repositorio de tareas.
+ * Utiliza PHPUnit para realizar pruebas unitarias.
+ * @package App\Tests
+ * @author Joc Duarte
+ */
+
 class TaskRepositoryTest extends TestCase
 {
     private TaskRepository $repo;

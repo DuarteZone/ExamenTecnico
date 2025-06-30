@@ -2,6 +2,13 @@
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
+/* * Seeder para crear tareas de prueba.
+ * Este script utiliza Faker para generar datos aleatorios y poblar la tabla de tareas.
+ * Crea 20 tareas asignadas a usuarios aleatorios con un título, descripción, estado y fecha de vencimiento.
+ * @package App\Core
+ * @author Joc Duarte
+ */
+
 use App\Core\Env;
 use App\Core\Database;
 use Faker\Factory;

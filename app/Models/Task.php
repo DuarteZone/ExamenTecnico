@@ -2,6 +2,13 @@
 
 namespace App\Models;
 
+/**
+ * Task modelo que representa una tarea en el sistema.
+ * Este modelo define las propiedades de una tarea y su estructura.
+ * @package App\Models
+ * @author Joc Duarte
+ */
+
 class Task
 {
     public int $id;

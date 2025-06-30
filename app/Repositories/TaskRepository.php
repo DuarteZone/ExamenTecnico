@@ -2,6 +2,15 @@
 
 namespace App\Repositories;
 
+/**
+ * * TaskRepository para manejar las operaciones de tareas en la base de datos.
+ * * Este repositorio maneja la creación, obtención, actualización y eliminación de tareas.
+ * * Utiliza la clase Database para conectarse a la base de datos y realizar las operaciones
+ * * necesarias. También maneja la paginación y los filtros de búsqueda.
+ * * @package App\Repositories
+ * @author Joc Duarte
+ */
+
 use App\Core\Database;
 use App\Models\Task;
 use PDO;

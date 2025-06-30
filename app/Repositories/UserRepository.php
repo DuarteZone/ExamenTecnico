@@ -9,6 +9,13 @@ use PDO;
 class UserRepository
 {
     private \PDO $db;
+    /**
+     * UserRepository para manejar las operaciones de usuarios en la base de datos.
+     * Este repositorio maneja la creación y búsqueda de usuarios por email.
+     * Utiliza la clase Database para conectarse a la base de datos y realizar las operaciones necesarias.
+     * @package App\Repositories
+     * @author Joc Duarte
+     */
 
     public function __construct()
     {
