@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use App\Core\Env;
 use App\Core\Database;
@@ -24,4 +24,20 @@ for ($i = 1; $i <= 5; $i++) {
     ]);
 }
 
-echo "Seeder ejecutado correctamente: 5 usuarios generados.\n";
+$emails = [];
+
+for ($i = 1; $i <= 5; $i++) {
+    $email = $faker->unique()->safeEmail();
+    $stmt->execute([
+        'email' => $email,
+        'name' => $faker->name(),
+        'password' => $passwordHash,
+    ]);
+    $emails[] = $email;
+}
+
+echo "Seeder ejecutado: 5 usuarios generados.\n";
+echo "Correos:\n";
+foreach ($emails as $email) {
+    echo " - $email\n";
+}
