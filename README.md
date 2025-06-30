@@ -124,26 +124,31 @@ composer require --dev phpunit/phpunit
 
 ## Estructura del proyecto
 
-```
+```text
 taskflow-api/
-├── app/                # Lógica de negocio (MVC)
-│   ├── Controllers/    # Controladores de la API
-│   ├── Models/         # Modelos de datos
-│   ├── Services/       # Servicios de negocio
-│   └── Core/           # Clases base y utilidades
-├── config/             # Configuración de la aplicación
-├── database/           # Migraciones y seeders
-├── public/             # Punto de entrada (index.php)
-├── tests/              # Tests unitarios y funcionales
-├── vendor/             # Dependencias de Composer
-├── .env                # Variables de entorno
-├── .gitignore           # Archivos ignorados por Git
-├── composer.json       # Dependencias del proyecto
-├── composer.lock       # Bloqueo de dependencias
-└── README.md           # Documentación del proyecto
-└── phpunit.xml.dist    # Configuración de PHPUnit
-
-```
+├── app/
+│   ├── Controllers/
+│   ├── Core/
+│   ├── Middlewares/
+│   ├── Models/
+│   ├── Repositories/
+│   ├── Services/
+├── config/
+│   └── config.php
+├── database/
+│   ├── migrate.php
+│   ├── seeder.php
+│   └── seeders/
+├── public/
+│   ├── index.php
+│   └── .htaccess
+├── tests/
+│   ├── AuthTest.php
+│   └── TaskRepositoryTest.php
+├── .env
+├── composer.json
+├── phpunit.xml
+├── README.md
 
 ---
 
